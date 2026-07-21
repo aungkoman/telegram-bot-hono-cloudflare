@@ -1,0 +1,14 @@
+# Local environment secrets — NEVER commit real credentials
+.dev.vars
+
+# Wrangler local state (SQLite, KV, cache, tmp)
+.wrangler/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TypeScript build output
+dist/

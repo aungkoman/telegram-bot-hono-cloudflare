@@ -1,0 +1,4 @@
+TELEGRAM_BOT_TOKEN=your-telegram-bot-token
+TELEGRAM_WEBHOOK_SECRET=any-random-secret-string
+FOOTBALL_DATA_API_KEY=your-football-data-org-key
+WORKER_URL=https://predict-league-bot.<your-subdomain>.workers.dev

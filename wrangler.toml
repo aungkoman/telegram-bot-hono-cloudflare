@@ -1,0 +1,43 @@
+name = "predict-league-bot"
+main = "src/index.ts"
+compatibility_date = "2024-11-01"
+compatibility_flags = ["nodejs_compat"]
+
+# ------------------------------------------------------------------
+# D1 database binding
+# Create the DB first:  wrangler d1 create predict-league-db
+# Then paste the returned database_id below.
+# ------------------------------------------------------------------
+[[d1_databases]]
+binding = "DB"
+database_name = "predict-league-db"
+database_id = "280dbd9b-c261-4bfe-93e4-a2e7e5929c3f"
+
+# ------------------------------------------------------------------
+# Cron triggers (all times UTC)
+# 06:00 -> pull tomorrow/today's fixtures for tracked competitions
+# */30 minutes between 12:00-23:30 -> check for finished matches & score them
+# ------------------------------------------------------------------
+[triggers]
+crons = ["0 6 * * *", "*/30 12-23 * * *"]
+
+# ------------------------------------------------------------------
+# Secrets (set these with `wrangler secret put <NAME>`, NOT here):
+#   TELEGRAM_BOT_TOKEN     - token from @BotFather
+#   TELEGRAM_WEBHOOK_SECRET - random string you choose, verifies webhook calls
+#   FOOTBALL_DATA_API_KEY  - free key from https://www.football-data.org/client/register
+# ------------------------------------------------------------------
+
+[vars]
+# Comma-separated football-data.org competition codes to track.
+# Free tier examples: PL (Premier League), PD (La Liga), BL1 (Bundesliga),
+# SA (Serie A), FL1 (Ligue 1), CL (Champions League), DED (Eredivisie),
+# PPL (Primeira Liga), ELC (Championship), BSA (Brazil Serie A), WC, EC
+TRACKED_COMPETITIONS = "PL,CL"
+# How many points for exact score vs correct outcome
+POINTS_EXACT = "3"
+POINTS_OUTCOME = "1"
+
+[observability.logs]
+enabled = true
+invocation_logs = true
